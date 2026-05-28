@@ -5,7 +5,7 @@
 // on a MapLibre dark basemap, colored by route. Open CORS, no auth, no backend.
 
 const API   = 'https://api-v3.mbta.com';
-const STYLE = 'https://tiles.openfreemap.org/styles/dark';
+const STYLE = 'https://tiles.openfreemap.org/styles/positron';
 const REFRESH_MS = 8_000;
 
 // ----- map -----
@@ -71,7 +71,7 @@ map.on('load', async () => {
     paint: {
       'circle-radius': ['interpolate', ['linear'], ['zoom'], 9, 3, 14, 7],
       'circle-color': ['get', 'color'],
-      'circle-stroke-color': '#0e1116',
+      'circle-stroke-color': '#ffffff',
       'circle-stroke-width': 1.2,
       'circle-opacity': 0.95,
     },

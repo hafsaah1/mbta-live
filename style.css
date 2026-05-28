@@ -1,18 +1,19 @@
 :root {
-  --bg: #0e1116;
-  --panel: #161b22;
-  --panel-2: #1c222b;
-  --ink: #e6edf3;
-  --muted: #8b949e;
-  --border: #2a313c;
+  --bg:      #ffeaf1;    /* pale pink page */
+  --panel:   #ffd6e3;    /* sidebar / topbar */
+  --panel-2: #ffc4d6;    /* popups */
+  --ink:     #4a1d2b;    /* dark plum text */
+  --muted:   #8b5a6b;    /* mauve */
+  --border:  rgba(74, 29, 43, 0.18);
+  --stroke:  #ffffff;    /* dot outline on light bg */
 
-  /* MBTA official line colors */
+  /* MBTA official line colors (kept — they need to stay recognizable) */
   --c-red:    #DA291C;
   --c-orange: #ED8B00;
   --c-blue:   #003DA5;
   --c-green:  #00843D;
-  --c-cr:     #80276C;   /* commuter rail purple */
-  --c-bus:    #FFC72C;   /* bus yellow */
+  --c-cr:     #80276C;
+  --c-bus:    #FFC72C;
   --c-ferry:  #008EAA;
   --c-silver: #7C878E;
 }
@@ -26,7 +27,7 @@ body {
   font-size: 14px;
   display: flex; flex-direction: column;
 }
-a { color: #58a6ff; text-decoration: none; }
+a { color: #b73a6c; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 .topbar {
@@ -36,9 +37,12 @@ a:hover { text-decoration: underline; }
   background: var(--panel);
   flex-shrink: 0;
 }
-.brand { font-weight: 700; }
-.status { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--muted); }
-.status.live  { color: #2ecc71; }
+.brand { font-weight: 700; letter-spacing: 0.01em; }
+.status {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px; color: var(--muted);
+}
+.status.live  { color: #1b8a4d; }
 .status.error { color: var(--c-red); }
 
 main { flex: 1; display: flex; min-height: 0; }
@@ -60,8 +64,8 @@ main { flex: 1; display: flex; min-height: 0; }
 .summary .tiny { color: var(--muted); font-size: 11px; font-family: ui-monospace, monospace; }
 
 .legend-title { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-.legend-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; color: var(--muted); }
-.legend-row em { margin-left: auto; font-style: normal; font-family: ui-monospace, monospace; color: var(--ink); font-size: 12px; }
+.legend-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; color: var(--ink); }
+.legend-row em { margin-left: auto; font-style: normal; font-family: ui-monospace, monospace; color: var(--ink); font-size: 12px; opacity: 0.7; }
 .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
 .c-red    { background: var(--c-red); }
 .c-orange { background: var(--c-orange); }
@@ -103,3 +107,14 @@ footer {
   font-size: 11px;
   font-family: ui-monospace, monospace;
 }
+
+/* a small pink wash over the basemap so it feels cohesive with the chrome */
+#map::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(255, 192, 215, 0.18);
+  mix-blend-mode: multiply;
+}
+#map { position: relative; }
