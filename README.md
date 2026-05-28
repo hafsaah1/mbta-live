@@ -1,35 +1,32 @@
-# MA RMV Wait Times
+# MBTA · Live
 
-A live map of every Massachusetts RMV Service Center with current
-licensing + registration wait times.
+Every MBTA bus, train, and ferry in Massachusetts, on a map, updating every 8
+seconds. ~500–1000 moving dots at any given time.
 
-**Live:** https://hafsaah1.github.io/mass-rmv-wait-times/
+**Live:** https://hafsaah1.github.io/mbta-live/
 
-Inspired by [Riley Walz's CA-DMV](https://walzr.com/CA-DMV/) — same idea, for
-Massachusetts instead of California.
+Same spirit as [Riley Walz's CA-DMV](https://walzr.com/CA-DMV/) — a live map of
+public infrastructure, built as a fully static page with no backend.
 
 ## How it works
 
-- The MA RMV publishes a public AWS API that returns XML for every branch:
-  `https://9p83os0fkf.execute-api.us-east-1.amazonaws.com/v1/waittime`
-- It's the backend behind [massgov.github.io/rmvwaittime](https://massgov.github.io/rmvwaittime/),
-  the state's own (per-branch) wait-time page. CORS is wide open, so the browser
-  hits it directly — **no backend, no cron, no database**.
-- A static page (HTML + CSS + ~200 lines of vanilla JS) parses the XML, joins
-  each branch with hardcoded coordinates in `branches.js`, and renders dots on
-  a [OpenFreeMap](https://openfreemap.org) dark basemap via
-  [MapLibre](https://maplibre.org/).
-- Auto-refreshes every 90 seconds. When the RMV is closed, the API errors and
-  the page shows a "RMV currently closed" state instead.
+- The MBTA's [v3 REST API](https://www.mbta.com/developers/v3-api) is open,
+  free, CORS-friendly, and returns JSON. So the browser hits it directly — no
+  cron, no database, no proxy.
+- On load: one call to `/routes` to learn each route's official color + name.
+- Then every 8 s: one call to `/vehicles?include=route` to get every active
+  vehicle's lat/lon, status, speed, and route, and we re-render.
+- Each vehicle is a dot colored by the line — Red, Orange, Blue, Green
+  branches, Commuter Rail purple, bus yellow, ferry teal.
+- Click a dot → popup with route, status, speed, vehicle ID, and occupancy.
 
 ## Files
 
-| File | What it does |
-|------|--------------|
+| File | Role |
+|------|------|
 | `index.html` | Page shell + layout. |
-| `style.css`  | Dark utility theme. |
-| `branches.js`| Hardcoded list of MA RMV branches with lat/lon. |
-| `app.js`     | Fetches the API, parses XML, paints the map and sidebar. |
+| `style.css`  | Dark theme + MBTA line colors. |
+| `app.js`     | Fetch / parse / paint loop (~200 lines). |
 
 ## Run locally
 
@@ -38,5 +35,5 @@ python3 -m http.server 8080
 # open http://localhost:8080
 ```
 
-That's it. No build step. No dependencies beyond two CDN scripts (MapLibre + the
-OpenFreeMap tile style).
+No build step, no install. Two CDN scripts (MapLibre + the OpenFreeMap tile
+style) and the MBTA's public API do all the heavy lifting.

@@ -3,46 +3,49 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MA RMV Wait Times</title>
-    <meta name="description" content="Live wait times at every Massachusetts RMV Service Center." />
+    <title>MBTA · Live</title>
+    <meta name="description" content="Every MBTA bus, train, and ferry, live on a map." />
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header class="topbar">
-      <div class="brand">Massachusetts RMV · Live Wait Times</div>
+      <div class="brand">MBTA · Live</div>
       <div class="status" id="status">loading…</div>
     </header>
 
     <main>
-      <div id="map" aria-label="Map of Massachusetts RMV service centers"></div>
+      <div id="map" aria-label="Live map of MBTA vehicles"></div>
 
-      <aside class="sidebar" id="sidebar">
+      <aside class="sidebar">
         <div class="summary">
-          <div class="row"><span>Total people waiting</span><strong id="totalWaiting">—</strong></div>
-          <div class="row"><span>Longest wait</span><strong id="longestWait">—</strong></div>
+          <div class="row"><span>Vehicles tracked</span><strong id="vehTotal">—</strong></div>
           <div class="row tiny" id="updated">—</div>
         </div>
+
         <div class="legend">
-          <div class="legend-title">licensing wait</div>
-          <div class="legend-row"><span class="dot c-low"></span>&lt; 15 min</div>
-          <div class="legend-row"><span class="dot c-mid"></span>15–45 min</div>
-          <div class="legend-row"><span class="dot c-hi"></span>45–90 min</div>
-          <div class="legend-row"><span class="dot c-vhi"></span>90+ min</div>
-          <div class="legend-row"><span class="dot c-closed"></span>closed / no data</div>
+          <div class="legend-title">modes</div>
+          <div class="legend-row"><span class="dot c-red"></span>Red Line <em id="cnt-Red">·</em></div>
+          <div class="legend-row"><span class="dot c-orange"></span>Orange Line <em id="cnt-Orange">·</em></div>
+          <div class="legend-row"><span class="dot c-blue"></span>Blue Line <em id="cnt-Blue">·</em></div>
+          <div class="legend-row"><span class="dot c-green"></span>Green Line <em id="cnt-Green">·</em></div>
+          <div class="legend-row"><span class="dot c-cr"></span>Commuter Rail <em id="cnt-CR">·</em></div>
+          <div class="legend-row"><span class="dot c-bus"></span>Bus <em id="cnt-Bus">·</em></div>
+          <div class="legend-row"><span class="dot c-ferry"></span>Ferry <em id="cnt-Ferry">·</em></div>
+          <div class="legend-row"><span class="dot c-silver"></span>Silver / other <em id="cnt-Other">·</em></div>
         </div>
-        <div class="branch-list" id="branchList"></div>
+
+        <div class="branch-list" id="topRoutes"></div>
       </aside>
     </main>
 
     <footer>
-      data from <a href="https://massgov.github.io/rmvwaittime/" target="_blank" rel="noopener">mass.gov / RMV</a>
-      &nbsp;·&nbsp; map tiles by <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a>
+      data from <a href="https://www.mbta.com/developers/v3-api" target="_blank" rel="noopener">MBTA v3 API</a>
+      &nbsp;·&nbsp; tiles by <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a>
       &nbsp;·&nbsp; built by <a href="https://hafsaah1.github.io" target="_blank" rel="noopener">hafsaah1</a>
     </footer>
 
     <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-    <script src="branches.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
